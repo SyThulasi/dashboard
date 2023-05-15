@@ -57,11 +57,6 @@ async def controller(q):
     if not q.client.intialized:
         mainApp(q)
         table_view(q)
-        # footer(q)
-  #  elif q.args.table:
-   #     table_view(q)
-   # elif q.args.plot:
-  #      plot_view(q)
 
     # Finally, save the page.
     await q.page.save()
@@ -118,7 +113,6 @@ def table_view(q):
         items=[
             ui.text_xl(content='Table View'),
             ui.table(
-      #  PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Fare,Embarked
                 name="data_table",
                 columns=[
                     ui.table_column(
@@ -128,7 +122,7 @@ def table_view(q):
                     ui.table_column(
                         name='Pclass', label='Class', sortable=True, ),
                     ui.table_column(
-                        name='Name', label='Name', sortable=True, searchable=True),
+                        name='Name', label='Name', sortable=True, searchable=True,max_width='300'),
                     ui.table_column(
                         name='Sex', label='Sex', sortable=True, ),
                     ui.table_column(
