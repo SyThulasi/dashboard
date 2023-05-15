@@ -6,7 +6,7 @@ import sys
 
 def fileHandler():
     # The file name is referenced manually
-    fileName = './DataSheet1.csv'
+    fileName = './docs/DataSheet1.csv'
     try:
         f = open(fileName, 'r')
     except FileNotFoundError:
