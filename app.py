@@ -6,7 +6,7 @@ import sys
 
 def fileHandler():
     # The file name is referenced manually
-    fileName = './DataSheet.csv'
+    fileName = './DataSheet1.csv'
     try:
         f = open(fileName, 'r')
     except FileNotFoundError:
@@ -32,14 +32,14 @@ def fileHandler():
 
 def contentTaker():
     file = fileHandler()
-    file.date = file.date.interpolate(
+    file.PassengerId = file.PassengerId.interpolate(
         method='linear',
         limit_direction='forward',
         axis=0
     )
-    file.date = file.date.fillna(method='bfill')
+    file.PassengerId = file.PassengerId.fillna(method='bfill')
     listOfData = list(file.itertuples(index=False, name=None))
-    return listOfData[:1100]
+    return listOfData[:]
 
 
 # Set variable dataSet
@@ -58,10 +58,10 @@ async def controller(q):
         mainApp(q)
         table_view(q)
         # footer(q)
-    elif q.args.table:
-        table_view(q)
-    elif q.args.plot:
-        plot_view(q)
+  #  elif q.args.table:
+   #     table_view(q)
+   # elif q.args.plot:
+  #      plot_view(q)
 
     # Finally, save the page.
     await q.page.save()
@@ -82,33 +82,23 @@ def mainApp(q):
                 breakpoint='l',
                 zones=[
                     ui.zone('header'),
-                    ui.zone('navigator'),
+                    #ui.zone('navigator'),
                     ui.zone('content'),
                     ui.zone('footer'),
                 ]),
         ])
-    # The card containing tabs for navigation.
-    q.page['navigator'] = ui.tab_card(
-        box='navigator',
-        items=[
-            ui.tab(name='table', label="Table View"),
-            ui.tab(name='plot', label="Plot View"),
-        ]
-    )
     # The header panel
     q.page['header'] = ui.header_card(
         box='header',  # in top left corner with 2 unit height and width
-        subtitle="From 2013 to 2017",
+        subtitle="Passengers Details",
         icon='BarChartVerticalFilterSolid',
-        title='''Oil Price Tracker''',
+        title='''Titanic dataset''',
     )
     # The footer frame
     q.page['footer'] = ui.footer_card(
         box='footer',
         caption='''
-        A Try On Wave for the First Time!!!
-
-        © Sy Thulasi.'''
+        © SyThulasi All Rights Reserved.'''
     )
     # This helps to view the Table_View when starting the program
     q.client.intialized = True
@@ -128,12 +118,29 @@ def table_view(q):
         items=[
             ui.text_xl(content='Table View'),
             ui.table(
+      #  PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Fare,Embarked
                 name="data_table",
                 columns=[
                     ui.table_column(
-                        name='date', label='Date', sortable=True, searchable=True, max_width='400'),
+                        name='PassengerId', label='Passenger ID', sortable=True, searchable=True),
                     ui.table_column(
-                        name='price', label='Price', sortable=True, ),
+                        name='Survived', label='Survived', sortable=True, ),
+                    ui.table_column(
+                        name='Pclass', label='Class', sortable=True, ),
+                    ui.table_column(
+                        name='Name', label='Name', sortable=True, searchable=True),
+                    ui.table_column(
+                        name='Sex', label='Sex', sortable=True, ),
+                    ui.table_column(
+                        name='Age', label='Age', sortable=True, ),
+                    ui.table_column(
+                        name='SibSp', label='SibSp', sortable=True, searchable=True),
+                    ui.table_column(
+                        name='Parch', label='Parch', sortable=True, ),
+                    ui.table_column(
+                        name='Fare', label='Fare', sortable=True, ),
+                    ui.table_column(
+                        name='Embarked', label='Embarked', sortable=True, ),
                 ],
                 rows=[
                     ui.table_row(
@@ -149,31 +156,3 @@ def table_view(q):
     )
 
 
-# A view for graph only.
-# Containing all the graph related things
-def plot_view(q):
-    # To delete a card named table_view from a page
-    del q.page['table_view']
-    q.page['plot_view'] = ui.form_card(
-        box='content',
-        items=[
-
-            ui.text_xl(
-                f'Oil Price between 2013 to 2017 -> A Sample Data Set'),
-            ui.visualization(
-                data=data(
-                    fields=['date', 'price'],
-                    size=8,
-                    rows=dataSet,
-                    pack=True,
-                ),
-                height='600px',
-                plot=ui.plot(marks=[
-                    ui.mark(type='line', x='=date', y='=price',
-                            x_title="Date", y_title="LKR", color='yellow'),
-                    ui.mark(type='area', x_scale='time-category',
-                            x='=date', y='=price', y_min=0, size='',)
-                ])
-            )
-        ]
-    )
