@@ -1,7 +1,7 @@
 # Passenger Details Dashboard
 
 The Passenger Details Dashboard is a web application Using H2O Wave that provides a user-friendly interface for viewing and managing passenger information. It allows users to access and display various details of passengers, facilitating efficient management and analysis of passenger data.
-
+![Example Image](assets/dash.png)
 ## Features
 
 - View a list of passengers along with their relevant details.
@@ -29,6 +29,5 @@ The Passenger Details Dashboard is a web application Using H2O Wave that provide
 ## Development
 
 - The main application logic can be found in the `app.py` file.
-- Additional customization and styling can be done in the `app.ui` module.
 
 
