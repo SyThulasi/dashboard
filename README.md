@@ -29,6 +29,5 @@ The Passenger Details Dashboard is a web application Using H2O Wave that provide
 ## Development
 
 - The main application logic can be found in the `app.py` file.
-- Additional customization and styling can be done in the `app.ui` module.
 
 
